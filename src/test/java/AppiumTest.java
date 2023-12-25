@@ -1,14 +1,16 @@
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.remote.MobileCapabilityType;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class AppiumTest {
 
-    private static AppiumDriver<MobileElement> driver;
+//    private static AppiumDriver<MobileElement> driver;
+
+    private static AppiumDriver driver;
 
     public static void main(String[] args) {
         try {
@@ -23,26 +25,30 @@ public class AppiumTest {
 
     public static void setUp() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "your_android_version");
-        capabilities.setCapability(MobileCapabilityType.APP, "path_to_your_apk_file_or_app_package");
-        capabilities.setCapability(MobileCapabilityType.UDID, "your_device_udid");
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
+        capabilities.setCapability("platformName", "Android");
+        capabilities.setCapability("platformVersion", "9.0.0"); // Replace with your Android version
+        capabilities.setCapability("deviceName", "pixel_xl"); // Replace with your device name
+        capabilities.setCapability("app", "D:\\Learning\\AppiumFramework\\src\\test\\resources\\apps\\Android.SauceLabs.Mobile.Sample.app.2.7.1.apk");
+        capabilities.setCapability("udid", "emulator-5554");
+        capabilities.setCapability("appPackage", "com.swaglabsmobileapp"); // Replace with your app package
+        capabilities.setCapability("appActivity", "com.swaglabsmobileapp.SplashActivity"); // Replace with your app activity
+        capabilities.setCapability("automationName", "uiautomator2");
 
-        URL appiumServerURL = new URL("http://localhost:4723/wd/hub");
-        driver = new AndroidDriver<>(appiumServerURL, capabilities);
+        URL appiumServerURL = new URL("http://127.0.0.1:4723");
+        driver = new AndroidDriver(appiumServerURL, capabilities);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     public static void testLogin() {
         // Replace these with the actual resource IDs or XPath of the login elements
-        MobileElement usernameField = driver.findElementById("your_username_field_id");
-        MobileElement passwordField = driver.findElementById("your_password_field_id");
-        MobileElement loginButton = driver.findElementById("your_login_button_id");
+//        MobileElement usernameField = (MobileElement) driver.findElement(MobileBy.AccessibilityId("your_username_field_id"));
+        WebElement usernameField = driver.findElement(AppiumBy.accessibilityId("test-Username"));
+        WebElement passwordField = driver.findElement(AppiumBy.accessibilityId("test-Password"));
+        WebElement loginButton = driver.findElement(AppiumBy.accessibilityId("test-LOGIN"));
 
         // Replace these with your test data
-        String username = "your_username";
-        String password = "your_password";
+        String username = "standard_user";
+        String password = "secret_sauce";
 
         usernameField.sendKeys(username);
         passwordField.sendKeys(password);

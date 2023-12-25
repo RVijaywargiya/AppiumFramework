@@ -11,15 +11,38 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>17</java.version>
+    <appium.version>8.3.0</appium.version>
+    <testng.version>7.8.0</testng.version>
   </properties>
 
   <dependencies>
+    <!-- Appium Java Client -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
+      <groupId>io.appium</groupId>
+      <artifactId>java-client</artifactId>
+      <version>9.0.0</version>
+    </dependency>
+
+    <!-- TestNG (you can choose another testing framework if you prefer) -->
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>7.8.0</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
