@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="YourTestSuite">
+    <test name="YourTest">
+        <classes>
+            <class name="BaseTest" />
+            <class name="AppiumTest" />
+        </classes>
+    </test>
+</suite>
