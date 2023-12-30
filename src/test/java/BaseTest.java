@@ -54,10 +54,10 @@ public class BaseTest {
         // Start Appium server
         Duration startUpTimeout = Duration.ofSeconds(300);
         appiumService = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-                .withAppiumJS(new java.io.File("C:\\Users\\rajat\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\appium.js"))
                 .usingAnyFreePort()
+                .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
                 .withArgument(GeneralServerFlag.LOG_LEVEL, "info")
-                        .withTimeout(startUpTimeout));
+                .withTimeout(startUpTimeout));
 
         appiumService.start();
 
@@ -66,7 +66,7 @@ public class BaseTest {
     public static void startEmulator() throws IOException, InterruptedException {
         // Start Android emulator
         // Replace "Pixel_3a_API_30" with the name of your AVD (Android Virtual Device)
-        String emulatorCommand = "emulator -avd Pixel_XL_API_30";
+        String emulatorCommand = "C:\\Users\\rajat\\AppData\\Local\\Android\\Sdk\\emulator\\emulator -avd Pixel_XL_API_30";
         Process process = Runtime.getRuntime().exec(emulatorCommand);
         process.waitFor();
     }
