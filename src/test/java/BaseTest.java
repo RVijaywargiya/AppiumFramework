@@ -8,10 +8,12 @@ import org.testng.annotations.BeforeTest;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 
 public class BaseTest {
 
     protected static AppiumDriver driver;
+    private static AppiumDriverLocalService appiumService;
 
     @BeforeTest
     public void setUp() throws Exception {
@@ -21,45 +23,51 @@ public class BaseTest {
     }
 
     @AfterTest
-    public void tearDown() {
+    public void tearDown() throws IOException, InterruptedException {
         if (driver != null) {
             driver.quit();
         }
+        stopEmulator();
+        appiumService.stop();
+    }
+
+    private void stopEmulator() throws InterruptedException, IOException {
+        String adbCommand = "adb emu kill";
+        Process process = Runtime.getRuntime().exec(adbCommand);
+        process.waitFor();
     }
 
     private static void startAppiumServer() {
         // Specify the path to the Appium.js file (you may need to adjust the path)
-        String appiumPath = "C:\\Users\\rajat\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\appium.js";
+//        String appiumPath = "C:\\Users\\rajat\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\appium.js";
+//
+//        // Create Appium service builder
+//        AppiumServiceBuilder serviceBuilder = new AppiumServiceBuilder()
+//                .withAppiumJS(new File(appiumPath))
+//                .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
+//                .withArgument(GeneralServerFlag.LOG_LEVEL, "info");
+//
+//        // Start the Appium server
+//        AppiumDriverLocalService service = AppiumDriverLocalService.buildService(serviceBuilder);
+//        service.start();
 
-        // Create Appium service builder
-        AppiumServiceBuilder serviceBuilder = new AppiumServiceBuilder()
-                .withAppiumJS(new File(appiumPath))
-                .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
-                .withArgument(GeneralServerFlag.LOG_LEVEL, "info");
+        // Start Appium server
+        Duration startUpTimeout = Duration.ofSeconds(300);
+        appiumService = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+                .withAppiumJS(new java.io.File("C:\\Users\\rajat\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\appium.js"))
+                .usingAnyFreePort()
+                .withArgument(GeneralServerFlag.LOG_LEVEL, "info")
+                        .withTimeout(startUpTimeout));
 
-        // Start the Appium server
-        AppiumDriverLocalService service = AppiumDriverLocalService.buildService(serviceBuilder);
-        service.start();
+        appiumService.start();
+
     }
 
-    public static void startEmulator() {
-
-        final String ANDROID_HOME = "C:\\Users\\rajat\\AppData\\Local\\Android\\Sdk";
-
-        try {
-            String emulatorPath = ANDROID_HOME + "\\emulator\\emulator.exe";
-
-            // Command to start the emulator
-            String command = emulatorPath + " -avd " + avdName;
-
-            // Start the emulator using the command
-            Process process = Runtime.getRuntime().exec(command);
-
-            // Optionally, wait for the process to finish (emulator fully started)
-            process.waitFor();
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+    public static void startEmulator() throws IOException, InterruptedException {
+        // Start Android emulator
+        // Replace "Pixel_3a_API_30" with the name of your AVD (Android Virtual Device)
+        String emulatorCommand = "emulator -avd Pixel_XL_API_30";
+        Process process = Runtime.getRuntime().exec(emulatorCommand);
+        process.waitFor();
     }
 }
