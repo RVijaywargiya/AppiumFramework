@@ -16,9 +16,6 @@ public class BaseTest {
 
     protected static AppiumDriver driver;
 
-    public BaseTest() throws MalformedURLException {
-    }
-
     @BeforeTest
     public void setUp() throws Exception {
         startAppiumServer();
