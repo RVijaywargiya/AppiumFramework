@@ -3,7 +3,7 @@
     <test name="YourTest">
         <classes>
             <class name="BaseTest" />
-            <class name="AppiumTest" />
+            <class name="LoginTest" />
         </classes>
     </test>
 </suite>
