@@ -1,13 +1,17 @@
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.InteractsWithApps;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import managers.DriverManager;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.time.Duration;
 
 public class BaseTest {
@@ -17,9 +21,12 @@ public class BaseTest {
 
     @BeforeTest
     public void setUp() throws Exception {
-        startAppiumServer();
         startEmulator();
+        startAppiumServer();
         driver = new DriverManager().getDriver();
+        Thread.sleep(15000);
+//        ((InteractsWithApps) driver).terminateApp("com.swaglabsmobileapp");
+//        ((InteractsWithApps) driver).activateApp("com.swaglabsmobileapp");
     }
 
     @AfterTest
@@ -37,20 +44,7 @@ public class BaseTest {
         process.waitFor();
     }
 
-    private static void startAppiumServer() {
-        // Specify the path to the Appium.js file (you may need to adjust the path)
-//        String appiumPath = "C:\\Users\\rajat\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\appium.js";
-//
-//        // Create Appium service builder
-//        AppiumServiceBuilder serviceBuilder = new AppiumServiceBuilder()
-//                .withAppiumJS(new File(appiumPath))
-//                .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
-//                .withArgument(GeneralServerFlag.LOG_LEVEL, "info");
-//
-//        // Start the Appium server
-//        AppiumDriverLocalService service = AppiumDriverLocalService.buildService(serviceBuilder);
-//        service.start();
-
+    private static void startAppiumServer() throws InterruptedException {
         // Start Appium server
         Duration startUpTimeout = Duration.ofSeconds(300);
         appiumService = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
@@ -60,14 +54,31 @@ public class BaseTest {
                 .withTimeout(startUpTimeout));
 
         appiumService.start();
-
+        waitForAppiumServerToStart(appiumService);
+        System.out.println("Appium server has been started : ");
     }
 
     public static void startEmulator() throws IOException, InterruptedException {
-        // Start Android emulator
-        // Replace "Pixel_3a_API_30" with the name of your AVD (Android Virtual Device)
-        String emulatorCommand = "C:\\Users\\rajat\\AppData\\Local\\Android\\Sdk\\emulator\\emulator -avd Pixel_XL_API_30";
+        String emulatorCommand = "cmd /c start C:\\Users\\rajat\\AppData\\Local\\Android\\Sdk\\emulator\\emulator -avd Pixel_XL_API_30";
         Process process = Runtime.getRuntime().exec(emulatorCommand);
         process.waitFor();
+        System.out.println("Emulator has been started : ");
+    }
+
+    private static void waitForAppiumServerToStart(AppiumDriverLocalService appiumServerService) {
+        try {
+            // Set a timeout based on your requirements
+//            int timeoutInSeconds = 60;
+            URL serverUrl = new URL(appiumServerService.getUrl().toString());
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+
+            // Use a condition that checks if the server is reachable
+            wait.until(ExpectedConditions.urlToBe(String.valueOf(serverUrl)));
+
+            System.out.println("Appium server started successfully");
+        } catch (Exception e) {
+            // Handle the exception or log an error
+            System.err.println("Error waiting for Appium server to start: " + e.getMessage());
+        }
     }
 }
