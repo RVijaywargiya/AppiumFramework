@@ -51,7 +51,7 @@ public class BaseTest {
         logger.info("Starting Appium server");
         Duration startUpTimeout = Duration.ofSeconds(300);
         appiumService = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-                .usingAnyFreePort()
+                .usingPort(4723)
                 .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
                 .withArgument(GeneralServerFlag.LOG_LEVEL, "info")
                 .withTimeout(startUpTimeout));
@@ -72,7 +72,6 @@ public class BaseTest {
     private static void waitForAppiumServerToStart(AppiumDriverLocalService appiumServerService) {
         try {
             // Set a timeout based on your requirements
-//            int timeoutInSeconds = 60;
             URL serverUrl = new URL(appiumServerService.getUrl().toString());
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 
