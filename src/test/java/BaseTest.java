@@ -28,7 +28,7 @@ public class BaseTest {
         startEmulator();
         startAppiumServer();
         driver = new DriverManager().getDriver();
-        Thread.sleep(15000);
+        Thread.sleep(5000);
     }
 
     @AfterTest
