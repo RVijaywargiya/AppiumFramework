@@ -4,6 +4,8 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import managers.DriverManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
@@ -18,15 +20,15 @@ public class BaseTest {
 
     protected static AppiumDriver driver;
     private static AppiumDriverLocalService appiumService;
+    protected static Logger logger;
 
     @BeforeTest
     public void setUp() throws Exception {
+        logger = LogManager.getLogger(BaseTest.class);
         startEmulator();
         startAppiumServer();
         driver = new DriverManager().getDriver();
         Thread.sleep(15000);
-//        ((InteractsWithApps) driver).terminateApp("com.swaglabsmobileapp");
-//        ((InteractsWithApps) driver).activateApp("com.swaglabsmobileapp");
     }
 
     @AfterTest
@@ -46,6 +48,7 @@ public class BaseTest {
 
     private static void startAppiumServer() throws InterruptedException {
         // Start Appium server
+        logger.info("Starting Appium server");
         Duration startUpTimeout = Duration.ofSeconds(300);
         appiumService = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
                 .usingAnyFreePort()
@@ -55,14 +58,15 @@ public class BaseTest {
 
         appiumService.start();
         waitForAppiumServerToStart(appiumService);
-        System.out.println("Appium server has been started : ");
+        logger.info("Appium server has been started : ");
     }
 
     public static void startEmulator() throws IOException, InterruptedException {
+        logger.info("Starting Emulator : ");
         String emulatorCommand = "cmd /c start C:\\Users\\rajat\\AppData\\Local\\Android\\Sdk\\emulator\\emulator -avd Pixel_XL_API_30";
         Process process = Runtime.getRuntime().exec(emulatorCommand);
         process.waitFor();
-        System.out.println("Emulator has been started : ");
+        logger.info("Emulator has been started : ");
     }
 
     private static void waitForAppiumServerToStart(AppiumDriverLocalService appiumServerService) {
