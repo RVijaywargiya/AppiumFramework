@@ -59,7 +59,6 @@ public class BaseTest {
 
         appiumService.start();
         waitForAppiumServerToStart(appiumService);
-        logger.info("Appium server has been started : ");
     }
 
     public static void startEmulator() throws IOException, InterruptedException {
@@ -67,7 +66,7 @@ public class BaseTest {
         String emulatorCommand = "cmd /c start C:\\Users\\rajat\\AppData\\Local\\Android\\Sdk\\emulator\\emulator -avd Pixel_XL_API_30";
         Process process = Runtime.getRuntime().exec(emulatorCommand);
         process.waitFor();
-        logger.info("Emulator has been started : ");
+        logger.info("Emulator has been started...");
     }
 
     private static void waitForAppiumServerToStart(AppiumDriverLocalService appiumServerService) {
@@ -79,10 +78,10 @@ public class BaseTest {
             // Use a condition that checks if the server is reachable
             wait.until(ExpectedConditions.urlToBe(String.valueOf(serverUrl)));
 
-            System.out.println("Appium server started successfully");
+            logger.info("Appium server started successfully...");
         } catch (Exception e) {
             // Handle the exception or log an error
-            System.err.println("Error waiting for Appium server to start: " + e.getMessage());
+            logger.info("Error waiting for Appium server to start..." + e.getMessage());
         }
     }
 }

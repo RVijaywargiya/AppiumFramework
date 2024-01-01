@@ -50,6 +50,12 @@
       <version>2.22.1</version> <!-- Replace with the latest version -->
     </dependency>
 
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20231013</version>
+    </dependency>
+
   </dependencies>
 
   <build>

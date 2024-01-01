@@ -14,10 +14,6 @@ public class LoginPage extends BasePage {
     WebElement passwordField = driver.findElement(AppiumBy.accessibilityId("test-Password"));
     WebElement loginButton = driver.findElement(AppiumBy.accessibilityId("test-LOGIN"));
 
-    // Replace these with your test data
-    String username = "standard_user";
-    String password = "secret_sauce";
-
     public LoginPage(AppiumDriver driver) {
         super(driver);
     }

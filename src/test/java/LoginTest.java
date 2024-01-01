@@ -1,6 +1,9 @@
 import org.apache.logging.log4j.LogManager;
 import org.testng.annotations.Test;
 import pages.LoginPage;
+import utils.JsonUtils;
+
+import static utils.JsonUtils.getJsonData;
 
 public class LoginTest extends BaseTest{
 
@@ -8,7 +11,7 @@ public class LoginTest extends BaseTest{
     public static void successfulLogin() throws InterruptedException {
         logger = LogManager.getLogger(LoginTest.class);
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("standard_user","secret_sauce");
+        loginPage.login(getJsonData("username"), getJsonData("password"));
         Thread.sleep(5000);
     }
 }
