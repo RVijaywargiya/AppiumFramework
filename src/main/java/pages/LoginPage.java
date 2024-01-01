@@ -2,9 +2,13 @@ package pages;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 
 public class LoginPage extends BasePage {
+
+    private static final Logger logger = LogManager.getLogger(LoginPage.class);
 
     WebElement usernameField = driver.findElement(AppiumBy.accessibilityId("test-Username"));
     WebElement passwordField = driver.findElement(AppiumBy.accessibilityId("test-Password"));
@@ -18,21 +22,26 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    public void enterUsername(String username) {
+    private void enterUsername(String username) {
         // Clear and enter the username in the username field
-        usernameField.clear();
-        usernameField.sendKeys(username);
+        clearText(usernameField);
+        logger.info("Clearing user name");
+        enterText(usernameField, username);
+        logger.info("Entering user name");
     }
 
-    public void enterPassword(String password) {
+    private void enterPassword(String password) {
         // Clear and enter the password in the password field
-        passwordField.clear();
-        passwordField.sendKeys(password);
+        clearText(passwordField);
+        logger.info("Clearing password");
+        enterText(passwordField, password);
+        logger.info("Entering password");
     }
 
-    public void clickLoginButton() {
+    private void clickLoginButton() {
         // Click the login button
-        loginButton.click();
+        clickElement(loginButton);
+        logger.info("Clicked login button");
     }
 
     public void login(String username, String password) {

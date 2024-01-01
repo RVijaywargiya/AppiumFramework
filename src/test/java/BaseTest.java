@@ -24,6 +24,7 @@ public class BaseTest {
 
     @BeforeTest
     public void setUp() throws Exception {
+        System.setProperty("log4j.configurationFile", "D:\\Learning\\AppiumFramework\\src\\test\\resources\\log4j2.xml");
         logger = LogManager.getLogger(BaseTest.class);
         startEmulator();
         startAppiumServer();

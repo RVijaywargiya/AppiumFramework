@@ -5,15 +5,10 @@ import pages.LoginPage;
 public class LoginTest extends BaseTest{
 
     @Test
-    public static void testLogin() throws InterruptedException {
+    public static void successfulLogin() throws InterruptedException {
         logger = LogManager.getLogger(LoginTest.class);
         LoginPage loginPage = new LoginPage(driver);
-        logger.info("Entering user name");
-        loginPage.enterUsername("standard_user");
-        logger.info("Entering password");
-        loginPage.enterPassword("secret_sauce");
-        logger.info("Clicking login button");
-        loginPage.clickLoginButton();
+        loginPage.login("standard_user","secret_sauce");
         Thread.sleep(5000);
     }
 }

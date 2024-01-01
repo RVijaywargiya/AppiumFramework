@@ -5,7 +5,7 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
         <!-- File Appender -->
-        <File name="File" fileName="D:\Learning\AppiumFramework\src\test\resources\logs\appium.log">
+        <File name="File" fileName="D:\Learning\AppiumFramework\src\main\resources\logs\appium.log">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </File>
     </Appenders>
