@@ -20,6 +20,8 @@ import java.time.Duration;
 import java.util.NoSuchElementException;
 import java.util.stream.IntStream;
 
+import static managers.CapabilitiesManager.getDesiredCapabilities;
+
 public class BaseTest {
 
     protected static AppiumDriver driver;
@@ -38,13 +40,14 @@ public class BaseTest {
         setUpLog4j2Property();
         startEmulator();
         startAppiumServer();
-        setUpDriver();
         waitForAppiumServerToStart(appiumService);
-        Thread.sleep(5000);
+        setUpDriver();
+//        Thread.sleep(10000);
+//        waitForLoginPageToBeVisible(10);
     }
 
     private static void setUpDriver() throws MalformedURLException {
-        driver = new DriverManager().getDriver();
+        driver = new DriverManager(driver).getDriver();
     }
 
     @AfterTest
@@ -101,5 +104,7 @@ public class BaseTest {
     public static void setUpLog4j2Property() {
         System.setProperty("log4j.configurationFile", propertiesManager.getProperty("log4j.configurationFile"));
     }
+
+
 
 }
