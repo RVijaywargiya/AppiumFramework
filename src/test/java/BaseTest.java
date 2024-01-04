@@ -1,24 +1,28 @@
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.InteractsWithApps;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import managers.DriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import pages.LoginPage;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.NoSuchElementException;
+import java.util.stream.IntStream;
 
 public class BaseTest {
 
     protected static AppiumDriver driver;
+    protected static WebDriverWait wait;
     private static AppiumDriverLocalService appiumService;
     protected static Logger logger;
 
@@ -28,8 +32,16 @@ public class BaseTest {
         logger = LogManager.getLogger(BaseTest.class);
         startEmulator();
         startAppiumServer();
+//        DriverManager driverManager = new DriverManager();
+//        driver = setUpDriver();
         driver = new DriverManager().getDriver();
+        waitForAppiumServerToStart(appiumService);
         Thread.sleep(5000);
+//        waitForLoginPagetoAppear();
+    }
+
+    private AppiumDriver setUpDriver() throws MalformedURLException {
+        return new DriverManager().getDriver();
     }
 
     @AfterTest
@@ -84,4 +96,20 @@ public class BaseTest {
             logger.info("Error waiting for Appium server to start..." + e.getMessage());
         }
     }
-}
+
+    public static void waitForLoginPagetoAppear() throws InterruptedException {
+
+//        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        wait.until(ExpectedConditions.visibilityOf(loginPage.getUsernameField()));
+        LoginPage loginPage = null;
+        for (int i = 1; i < 10; i++) {
+            try {
+                loginPage = new LoginPage(driver);
+            } catch (NoSuchElementException e) {
+                Thread.sleep(1000);
+            }
+//            assert loginPage != null;
+            if(loginPage.getUsernameField().isDisplayed()) {
+                break;
+        }
+}}}

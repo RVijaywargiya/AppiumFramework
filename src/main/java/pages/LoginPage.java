@@ -46,4 +46,8 @@ public class LoginPage extends BasePage {
         enterPassword(password);
         clickLoginButton();
     }
+
+    public WebElement getUsernameField() {
+        return usernameField;
+    }
 }
