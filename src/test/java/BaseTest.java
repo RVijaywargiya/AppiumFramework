@@ -1,4 +1,6 @@
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.InteractsWithApps;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
@@ -42,12 +44,14 @@ public class BaseTest {
         startAppiumServer();
         waitForAppiumServerToStart(appiumService);
         setUpDriver();
+//        launchApp();
 //        Thread.sleep(10000);
 //        waitForLoginPageToBeVisible(10);
     }
 
     private static void setUpDriver() throws MalformedURLException {
         driver = new DriverManager(driver).getDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
     @AfterTest
@@ -105,6 +109,8 @@ public class BaseTest {
         System.setProperty("log4j.configurationFile", propertiesManager.getProperty("log4j.configurationFile"));
     }
 
-
+//    public void interactWithApp() {
+//        driver.launchApp();
+//    }
 
 }

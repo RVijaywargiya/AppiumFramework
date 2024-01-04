@@ -19,7 +19,6 @@ public class LoginTest extends BaseTest{
         loginPage = new LoginPage(driver);
         waitForLoginPageToBeVisible();
         loginPage.login(getJsonData("username"), getJsonData("password"));
-//        Thread.sleep(5000);
     }
 
     private static void waitForLoginPageToBeVisible() {
