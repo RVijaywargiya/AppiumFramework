@@ -3,6 +3,8 @@ import org.testng.annotations.Test;
 import pages.LoginPage;
 import utils.JsonUtils;
 
+import java.net.MalformedURLException;
+
 import static utils.JsonUtils.getJsonData;
 
 public class LoginTest extends BaseTest{

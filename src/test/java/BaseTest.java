@@ -3,6 +3,7 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import managers.DriverManager;
+import managers.PropertiesManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
@@ -25,23 +26,25 @@ public class BaseTest {
     protected static WebDriverWait wait;
     private static AppiumDriverLocalService appiumService;
     protected static Logger logger;
+    protected static PropertiesManager propertiesManager;
+
+    public BaseTest() {
+        logger = LogManager.getLogger(BaseTest.class);
+        propertiesManager = new PropertiesManager();
+    }
 
     @BeforeTest
     public void setUp() throws Exception {
-        System.setProperty("log4j.configurationFile", "D:\\Learning\\AppiumFramework\\src\\test\\resources\\log4j2.xml");
-        logger = LogManager.getLogger(BaseTest.class);
+        setUpLog4j2Property();
         startEmulator();
         startAppiumServer();
-//        DriverManager driverManager = new DriverManager();
-//        driver = setUpDriver();
-        driver = new DriverManager().getDriver();
+        setUpDriver();
         waitForAppiumServerToStart(appiumService);
         Thread.sleep(5000);
-//        waitForLoginPagetoAppear();
     }
 
-    private AppiumDriver setUpDriver() throws MalformedURLException {
-        return new DriverManager().getDriver();
+    private static void setUpDriver() throws MalformedURLException {
+        driver = new DriverManager().getDriver();
     }
 
     @AfterTest
@@ -85,11 +88,9 @@ public class BaseTest {
         try {
             // Set a timeout based on your requirements
             URL serverUrl = new URL(appiumServerService.getUrl().toString());
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-
+            wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             // Use a condition that checks if the server is reachable
             wait.until(ExpectedConditions.urlToBe(String.valueOf(serverUrl)));
-
             logger.info("Appium server started successfully...");
         } catch (Exception e) {
             // Handle the exception or log an error
@@ -97,19 +98,8 @@ public class BaseTest {
         }
     }
 
-    public static void waitForLoginPagetoAppear() throws InterruptedException {
+    public static void setUpLog4j2Property() {
+        System.setProperty("log4j.configurationFile", propertiesManager.getProperty("log4j.configurationFile"));
+    }
 
-//        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        wait.until(ExpectedConditions.visibilityOf(loginPage.getUsernameField()));
-        LoginPage loginPage = null;
-        for (int i = 1; i < 10; i++) {
-            try {
-                loginPage = new LoginPage(driver);
-            } catch (NoSuchElementException e) {
-                Thread.sleep(1000);
-            }
-//            assert loginPage != null;
-            if(loginPage.getUsernameField().isDisplayed()) {
-                break;
-        }
-}}}
+}
