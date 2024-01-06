@@ -9,6 +9,7 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import utils.ScreenshotUtils;
 
 public class ExtentReportListener implements ITestListener {
 
@@ -37,6 +38,7 @@ public class ExtentReportListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         extentTest.log(Status.FAIL, MarkupHelper.createLabel("Test failed", ExtentColor.RED));
         extentTest.log(Status.FAIL, result.getThrowable());
+        extentTest.addScreenCaptureFromPath(ScreenshotUtils.getScreenshotPath());
     }
 
     @Override

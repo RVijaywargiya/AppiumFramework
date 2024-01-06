@@ -11,9 +11,11 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import pages.LoginPage;
+import utils.ScreenshotUtils;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -55,7 +57,12 @@ public class BaseTest {
     }
 
     @AfterTest
-    public void tearDown() throws IOException, InterruptedException {
+    public void tearDown(ITestResult result) throws IOException, InterruptedException {
+
+        if (result.getStatus() == ITestResult.FAILURE) {
+            new ScreenshotUtils(driver).captureScreenshot(result.getMethod().getMethodName());
+        }
+
         if (driver != null) {
             driver.quit();
         }
