@@ -13,7 +13,7 @@ This repository contains a test automation framework built using Appium, Java, T
 
 - **Log4j2:** Logging is implemented using Log4j2 to capture detailed logs for debugging and analysis.
 
-- **Extent Reports:** HTML-based Extent Reports are integrated to generate detailed and visually appealing test reports.
+- **Extent Reports:** HTML-based Extent Reports are integrated to generate detailed and visually appealing test listeners.
 
 - **JSON for Data:** JSON files are used for storing test data, making it easy to manage and update test data separately from the test scripts.
 

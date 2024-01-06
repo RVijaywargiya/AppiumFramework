@@ -1,5 +1,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="YourTestSuite">
+    <listeners>
+        <listener class-name="listeners.ExtentReportListener" />
+    </listeners>
     <test name="YourTest">
         <classes>
             <class name="BaseTest" />

@@ -27,21 +27,4 @@ public class DriverManager {
         }
         return driver;
     }
-//    private void setDriver(AppiumDriver driver) throws MalformedURLException {
-//
-//
-//        if (driver == null) {
-//            URL appiumServerURL = new URL(URL);
-//            try {
-//                driver = new AppiumDriver(appiumServerURL, getDesiredCapabilities());
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        System.out.println("After driver instantiation");
-//    }
-
-
-
-
 }
