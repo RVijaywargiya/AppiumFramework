@@ -29,10 +29,4 @@ public class JsonUtils {
     public static String getJsonData(String param) {
         return jsonObject.getString(param);
     }
-
-    public static void main(String[] args) {
-        System.out.println(getJsonData("username"));
-        System.out.println(getJsonData("password"));
-    }
-
 }

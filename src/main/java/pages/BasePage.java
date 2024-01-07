@@ -15,7 +15,7 @@ public class BasePage {
 
     public BasePage(AppiumDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait = new WebDriverWait(this.driver, Duration.ofSeconds(15));
     }
 
     public void enterText(WebElement element, String text) {
@@ -30,6 +30,11 @@ public class BasePage {
     public void clickElement(WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
         element.click();
+    }
+
+    public String getElementText(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+        return element.getText();
     }
 
 

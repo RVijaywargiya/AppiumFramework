@@ -12,8 +12,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.asserts.SoftAssert;
 import pages.LoginPage;
 import utils.ScreenshotUtils;
 
@@ -40,15 +43,12 @@ public class BaseTest {
     }
 
     @BeforeTest
-    public void setUp() throws Exception {
+    public void testSetUp() throws Exception {
         setUpLog4j2Property();
         startEmulator();
         startAppiumServer();
         waitForAppiumServerToStart(appiumService);
         setUpDriver();
-//        launchApp();
-//        Thread.sleep(10000);
-//        waitForLoginPageToBeVisible(10);
     }
 
     private static void setUpDriver() throws MalformedURLException {
@@ -56,13 +56,15 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
-    @AfterTest
-    public void tearDown(ITestResult result) throws IOException, InterruptedException {
-
+    @AfterMethod
+    public void saveScreenshot(ITestResult result) {
         if (result.getStatus() == ITestResult.FAILURE) {
             new ScreenshotUtils(driver).captureScreenshot(result.getMethod().getMethodName());
         }
+    }
 
+    @AfterTest
+    public void tearDown() throws IOException, InterruptedException {
         if (driver != null) {
             driver.quit();
         }
