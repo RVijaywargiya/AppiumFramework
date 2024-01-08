@@ -2,6 +2,7 @@ package pages;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -35,6 +36,10 @@ public class BasePage {
     public String getElementText(WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
         return element.getText();
+    }
+
+    public String getElementText(By by) {
+        return driver.findElement(by).getText();
     }
 
 

@@ -1,4 +1,5 @@
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeMethod;
@@ -13,24 +14,27 @@ import static utils.JsonUtils.getJsonData;
 public class LoginTest extends BaseTest {
 
     LoginPage loginPage;
-    WebDriverWait wait;
-
     SoftAssert softAssert;
+    Logger logger;
 
     @BeforeMethod
     public void setUp() {
+        loginPage = new LoginPage(driver);
         logger = LogManager.getLogger(LoginTest.class);
         softAssert = new SoftAssert();
-        this.loginPage = new LoginPage(driver);
     }
 
     @Test
     public void successfulLogin() throws InterruptedException {
+//        logger = LogManager.getLogger(LoginTest.class);
+//        softAssert = new SoftAssert();
+//        loginPage = new LoginPage(driver);
         loginPage.login(getJsonData("username"), getJsonData("password"));
     }
 
     @Test
     public void verifyLockedOutUserMessage() {
+//        loginPage = new LoginPage(driver);
         loginPage.login(getJsonData("username"), getJsonData("password"));
         softAssert.assertEquals(loginPage.getLockedOutUserErrorMessageText(),
                 "Sorry, this user has been locked out.",

@@ -38,7 +38,7 @@ public class ExtentReportListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         extentTest.log(Status.FAIL, MarkupHelper.createLabel("Test failed", ExtentColor.RED));
         extentTest.log(Status.FAIL, result.getThrowable());
-        extentTest.addScreenCaptureFromPath(ScreenshotUtils.getScreenshotPath());
+//        extentTest.addScreenCaptureFromPath(ScreenshotUtils.getScreenshotPath());
     }
 
     @Override

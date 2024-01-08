@@ -51,9 +51,10 @@ public class BaseTest {
         setUpDriver();
     }
 
-    private static void setUpDriver() throws MalformedURLException {
+    private static void setUpDriver() throws MalformedURLException, InterruptedException {
         driver = new DriverManager(driver).getDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        Thread.sleep(18000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(propertiesManager.getIntProperty("implicitly.wait.timeout")));
     }
 
     @AfterMethod
@@ -117,9 +118,5 @@ public class BaseTest {
     public static void setUpLog4j2Property() {
         System.setProperty("log4j.configurationFile", propertiesManager.getProperty("log4j.configurationFile"));
     }
-
-//    public void interactWithApp() {
-//        driver.launchApp();
-//    }
 
 }

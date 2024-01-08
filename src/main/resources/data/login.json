@@ -1,4 +1,14 @@
-{
-  "username": "locked_out_user",
-  "password": "secret_sauce"
-}
+[
+  {
+    "positive": {
+      "username": "standard_user",
+      "password": "secret_sauce"
+    }
+  },
+  {
+    "negative": {
+      "username": "locked_out_user",
+      "password": "secret_sauce"
+    }
+  }
+]
