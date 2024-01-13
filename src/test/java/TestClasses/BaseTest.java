@@ -43,28 +43,13 @@ public class BaseTest {
         startEmulator();
         startAppiumServer();
         waitForAppiumServerToStart(appiumService);
-        setUpDriver();
-    }
-
-//    @BeforeMethod
-    private static void setUpDriver() throws MalformedURLException, InterruptedException {
-        driver = new DriverManager(driver).getDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(propertiesManager.getIntProperty("implicitly.wait.timeout")));
-    }
-
-    @AfterMethod
-    public void saveScreenshot(ITestResult result) {
-//        if (result.getStatus() == ITestResult.FAILURE) {
-//            new ScreenshotUtils(driver).captureScreenshot(result.getMethod().getMethodName());
-//        }
-        new ProductsPage(driver).openSideMenu().clickLogout();
     }
 
     @AfterTest
     public void tearDown() throws IOException, InterruptedException {
-        stopEmulator();
-        appiumService.stop();
         driver.quit();
+        appiumService.stop();
+        stopEmulator();
     }
 
     private void stopEmulator() throws InterruptedException, IOException {
