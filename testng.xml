@@ -5,8 +5,8 @@
     </listeners>
     <test name="YourTest">
         <classes>
-            <class name="BaseTest" />
-            <class name="LoginTest" />
+            <class name="TestClasses.BaseTest" />
+            <class name="TestClasses.LoginTest" />
         </classes>
     </test>
 </suite>

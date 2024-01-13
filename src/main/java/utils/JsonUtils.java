@@ -1,5 +1,6 @@
 package utils;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
@@ -9,24 +10,24 @@ import java.nio.file.Paths;
 public class JsonUtils {
 
     // Read JSON file content as a string
-    private static final JSONObject jsonObject;
+    private static final JSONArray jsonArray;
 
     static {
-        JSONObject tempObject = null;
+        JSONArray tempObject = null;
         try {
             // Read JSON file content as a string
             String jsonContent = new String(Files.readAllBytes(Paths.get("D:\\Learning\\AppiumFramework\\src\\main\\resources\\data\\login.json")));
 
             // Parse the JSON string into a JSONObject
-            tempObject = new JSONObject(jsonContent);
+            tempObject = new JSONArray(jsonContent);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        jsonObject = tempObject;
+        jsonArray = tempObject;
     }
 
-    public static String getJsonData(String param) {
-        return jsonObject.getString(param);
+    public static String getJsonData(Integer index, String param) {
+        return jsonArray.getJSONObject(index).getString(param);
     }
 }

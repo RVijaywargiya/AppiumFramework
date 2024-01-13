@@ -1,6 +1,6 @@
-import com.google.common.collect.ImmutableMap;
+package TestClasses;
+
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.InteractsWithApps;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
@@ -8,7 +8,6 @@ import managers.DriverManager;
 import managers.PropertiesManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
@@ -16,18 +15,12 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
-import org.testng.asserts.SoftAssert;
-import pages.LoginPage;
 import utils.ScreenshotUtils;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
-import java.util.NoSuchElementException;
-import java.util.stream.IntStream;
-
-import static managers.CapabilitiesManager.getDesiredCapabilities;
 
 public class BaseTest {
 
@@ -51,9 +44,9 @@ public class BaseTest {
         setUpDriver();
     }
 
+//    @BeforeMethod
     private static void setUpDriver() throws MalformedURLException, InterruptedException {
         driver = new DriverManager(driver).getDriver();
-//        Thread.sleep(18000);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(propertiesManager.getIntProperty("implicitly.wait.timeout")));
     }
 
@@ -66,11 +59,9 @@ public class BaseTest {
 
     @AfterTest
     public void tearDown() throws IOException, InterruptedException {
-        if (driver != null) {
-            driver.quit();
-        }
         stopEmulator();
         appiumService.stop();
+        driver.quit();
     }
 
     private void stopEmulator() throws InterruptedException, IOException {
