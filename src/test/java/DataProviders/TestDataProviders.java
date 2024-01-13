@@ -14,7 +14,7 @@ public class TestDataProviders {
     @DataProvider(name = "unsuccessfulLogin")
     public static Object[][] loginTestData2() {
         return new Object[][] {
-                {"username", "locked_out_user"}
+                {"locked_out_user", "secret_sauce"}
         };
     }
 }
