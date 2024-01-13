@@ -1,5 +1,6 @@
 package TestClasses;
 
+import CommonComponents.Sidebar;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
@@ -55,6 +56,7 @@ public class BaseTest {
         if (result.getStatus() == ITestResult.FAILURE) {
             new ScreenshotUtils(driver).captureScreenshot(result.getMethod().getMethodName());
         }
+        new Sidebar(driver).clickLogout();
     }
 
     @AfterTest

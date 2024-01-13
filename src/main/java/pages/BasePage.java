@@ -11,7 +11,7 @@ import java.time.Duration;
 
 public class BasePage {
 
-    AppiumDriver driver;
+    protected AppiumDriver driver;
     WebDriverWait wait;
 
     public BasePage(AppiumDriver driver) {
