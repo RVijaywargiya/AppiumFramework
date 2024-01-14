@@ -38,8 +38,8 @@ This repository contains a test automation framework built using Appium, Java, T
    - Ensure that you have the necessary emulators or physical devices set up for testing. Refer to the Appium documentation for configuring emulators or connecting physical devices.
 
 4. **Project Configuration:**
-   - Open the `src/test/resources/config` directory and review the configuration files.
-   - Adjust the settings in `appium-config.properties` to match your Appium server configuration, such as server URL, platform name, device name, etc.
+   - Open the `src/main/resources/config` directory and review the configuration files.
+   - Adjust the settings in `config.properties` to match your Appium server configuration, such as server URL, platform name, device name, etc.
 
 5. **Test Data Configuration:**
    - Navigate to the `src/test/resources/data` directory and update the JSON files with relevant test data.

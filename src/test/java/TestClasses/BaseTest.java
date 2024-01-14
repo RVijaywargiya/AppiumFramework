@@ -65,7 +65,7 @@ public class BaseTest {
 
     private static void startAppiumServer() throws InterruptedException {
         // Start Appium server
-        logger.info("Starting Appium server");
+        logger.info("Starting Appium server...");
         Duration startUpTimeout = Duration.ofSeconds(300);
         appiumService = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
                 .usingPort(4723)
@@ -78,7 +78,7 @@ public class BaseTest {
     }
 
     public static void startEmulator() throws IOException, InterruptedException {
-        logger.info("Starting Emulator : ");
+        logger.info("Starting Emulator...");
         String emulatorCommand = "cmd /c start C:\\Users\\rajat\\AppData\\Local\\Android\\Sdk\\emulator\\emulator -avd Pixel_XL_API_30";
         Process process = Runtime.getRuntime().exec(emulatorCommand);
         process.waitFor();
