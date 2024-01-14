@@ -20,7 +20,7 @@ public class LoginPage extends BasePage {
     private final WebElement usernameField = driver.findElement(AppiumBy.accessibilityId("test-Username"));
     private final WebElement passwordField = driver.findElement(AppiumBy.accessibilityId("test-Password"));
     private final WebElement loginButton = driver.findElement(AppiumBy.accessibilityId("test-LOGIN"));
-    private final By lockedOutUserErrorMessage = AppiumBy.accessibilityId("test-Error message");
+    private final By lockedOutUserErrorMessage = AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"test-Error message\"]/android.widget.TextView");
 
     public LoginPage(AppiumDriver driver) {
         super(driver);

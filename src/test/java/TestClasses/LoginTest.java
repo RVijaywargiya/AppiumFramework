@@ -29,7 +29,7 @@ public class LoginTest extends BaseTest {
     Logger logger;
 
     @BeforeMethod
-    public void setUp() throws MalformedURLException, InterruptedException {
+    public void setUp() throws MalformedURLException {
         setUpDriver();
         logger = LogManager.getLogger(LoginTest.class);
         softAssert = new SoftAssert();
@@ -54,7 +54,8 @@ public class LoginTest extends BaseTest {
     @Test(priority = 2, dataProvider = "unsuccessfulLogin", dataProviderClass = TestDataProviders.class)
     public void verifyLockedOutUserMessage(String userName, String password) {
         loginPage.login(userName, password);
-        String UNSUCCESSFUL_LOGIN_ERROR = "Sorry, this user has been locked out.";
+        String UNSUCCESSFUL_LOGIN_ERROR = "Sorry1, this user has been locked out.";
+        logger.info("Actual error message -> " + loginPage.getLockedOutUserErrorMessageText());
         softAssert.assertEquals(loginPage.getLockedOutUserErrorMessageText(),
                 UNSUCCESSFUL_LOGIN_ERROR,
                 "Actual error message : " + loginPage.getLockedOutUserErrorMessageText() + "differs from expected error message");
