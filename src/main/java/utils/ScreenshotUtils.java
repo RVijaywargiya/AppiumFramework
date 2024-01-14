@@ -1,6 +1,7 @@
 package utils;
 
 import io.appium.java_client.AppiumDriver;
+import managers.PropertiesManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
@@ -25,7 +26,8 @@ public class ScreenshotUtils {
             File sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
             // Specify the directory where you want to store the screenshot
-            destinationPath = Path.of("src/test/resources/screenshots", methodName + "_screenshot.png");
+            destinationPath = Path.of("D:" + File.separator + "Learning" + File.separator + "AppiumFramework" + File.separator + "src" +
+                    File.separator + "test" + File.separator + "resources" + File.separator + "screenshots", methodName + "_screenshot.png");
 
             // Copy the screenshot to the specified directory
             Files.copy(sourceFile.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);

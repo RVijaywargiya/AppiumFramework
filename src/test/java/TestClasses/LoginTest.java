@@ -5,6 +5,7 @@ import managers.DriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.devtools.v85.page.Page;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -19,6 +20,7 @@ import utils.ScreenshotUtils;
 import java.net.MalformedURLException;
 import java.time.Duration;
 
+import static org.testng.Assert.assertEquals;
 import static utils.JsonUtils.getJsonData;
 
 public class LoginTest extends BaseTest {
@@ -56,7 +58,7 @@ public class LoginTest extends BaseTest {
         loginPage.login(userName, password);
         String UNSUCCESSFUL_LOGIN_ERROR = "Sorry1, this user has been locked out.";
         logger.info("Actual error message -> " + loginPage.getLockedOutUserErrorMessageText());
-        softAssert.assertEquals(loginPage.getLockedOutUserErrorMessageText(),
+        assertEquals(loginPage.getLockedOutUserErrorMessageText(),
                 UNSUCCESSFUL_LOGIN_ERROR,
                 "Actual error message : " + loginPage.getLockedOutUserErrorMessageText() + "differs from expected error message");
     }
