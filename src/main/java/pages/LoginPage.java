@@ -2,6 +2,7 @@ package pages;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
@@ -15,6 +16,7 @@ public class LoginPage extends BasePage {
 
     private static final Logger logger = LogManager.getLogger(LoginPage.class);
 
+    @Getter
     private final WebElement usernameField = driver.findElement(AppiumBy.accessibilityId("test-Username"));
     private final WebElement passwordField = driver.findElement(AppiumBy.accessibilityId("test-Password"));
     private final WebElement loginButton = driver.findElement(AppiumBy.accessibilityId("test-LOGIN"));
@@ -52,10 +54,6 @@ public class LoginPage extends BasePage {
         enterUsername(username);
         enterPassword(password);
         clickLoginButton();
-    }
-
-    public WebElement getUsernameField() {
-        return usernameField;
     }
 
     public String getLockedOutUserErrorMessageText() {

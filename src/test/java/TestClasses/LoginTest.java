@@ -4,6 +4,7 @@ import DataProviders.TestDataProviders;
 import managers.DriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.devtools.v85.page.Page;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -11,6 +12,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.LoginPage;
+import pages.PageManager;
 import pages.ProductsPage;
 import utils.ScreenshotUtils;
 
@@ -26,25 +28,25 @@ public class LoginTest extends BaseTest {
     SoftAssert softAssert;
     Logger logger;
 
-    private final String expectedUnsuccessfulLoginErrorMessage = "Sorry, this user has been locked out.";
-
     @BeforeMethod
     public void setUp() throws MalformedURLException, InterruptedException {
         setUpDriver();
-        loginPage = new LoginPage(driver);
         logger = LogManager.getLogger(LoginTest.class);
         softAssert = new SoftAssert();
+        pageManager = new PageManager(driver);
+        loginPage = pageManager.getLoginPage();
     }
 
-    private static void setUpDriver() throws MalformedURLException, InterruptedException {
+    private static void setUpDriver() throws MalformedURLException {
         driver = new DriverManager(driver).getDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(propertiesManager.getIntProperty("implicitly.wait.timeout")));
     }
 
+
     @Test(priority = 1, dataProvider =  "successfulLogin", dataProviderClass = TestDataProviders.class)
     public void successfulLogin(String userName, String password) throws InterruptedException {
         loginPage.login(userName, password);
-        productsPage = new ProductsPage(driver);
+        productsPage = pageManager.getProductsPage();
         softAssert.assertEquals(productsPage.getProductsPageTitle(), "PRODUCTS", "Products page title is incorrect");
         new ProductsPage(driver).openSideMenu().clickLogout();
     }
@@ -52,8 +54,9 @@ public class LoginTest extends BaseTest {
     @Test(priority = 2, dataProvider = "unsuccessfulLogin", dataProviderClass = TestDataProviders.class)
     public void verifyLockedOutUserMessage(String userName, String password) {
         loginPage.login(userName, password);
+        String UNSUCCESSFUL_LOGIN_ERROR = "Sorry, this user has been locked out.";
         softAssert.assertEquals(loginPage.getLockedOutUserErrorMessageText(),
-                expectedUnsuccessfulLoginErrorMessage,
+                UNSUCCESSFUL_LOGIN_ERROR,
                 "Actual error message : " + loginPage.getLockedOutUserErrorMessageText() + "differs from expected error message");
     }
 
