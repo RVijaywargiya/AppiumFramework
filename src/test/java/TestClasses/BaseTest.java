@@ -47,13 +47,14 @@ public class BaseTest {
         setUpLog4j2Property();
         startEmulator();
         startAppiumServer();
+        setUpDriver();
         waitForAppiumServerToStart(appiumService);
     }
 
     @AfterTest
     public void tearDown() throws IOException, InterruptedException {
         driver.quit();
-        appiumService.stop();
+        stopAppiumServer();
         stopEmulator();
     }
 
@@ -74,7 +75,7 @@ public class BaseTest {
                 .withTimeout(startUpTimeout));
 
         appiumService.start();
-        waitForAppiumServerToStart(appiumService);
+//        waitForAppiumServerToStart(appiumService);
     }
 
     public static void startEmulator() throws IOException, InterruptedException {
@@ -88,19 +89,32 @@ public class BaseTest {
     private static void waitForAppiumServerToStart(AppiumDriverLocalService appiumServerService) {
         try {
             // Set a timeout based on your requirements
-            URL serverUrl = new URL(appiumServerService.getUrl().toString());
-            wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-            // Use a condition that checks if the server is reachable
-            wait.until(ExpectedConditions.urlToBe(String.valueOf(serverUrl)));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            // Use a condition that checks if the Appium server is running
+            wait.until(driver -> appiumServerService.isRunning());
             logger.info("Appium server started successfully...");
         } catch (Exception e) {
+            // Print the stack trace for better debugging
+            e.printStackTrace();
             // Handle the exception or log an error
-            logger.info("Error waiting for Appium server to start..." + e.getMessage());
+            logger.info("Error waiting for Appium server to start: " + e.getMessage());
         }
     }
 
     public static void setUpLog4j2Property() {
         System.setProperty("log4j.configurationFile", propertiesManager.getProperty("log4j.configurationFile"));
+    }
+
+    public static void stopAppiumServer() {
+        if (appiumService != null) {
+            appiumService.stop();
+            logger.info("Appium server stopped...");
+        }
+    }
+
+    private static void setUpDriver() throws MalformedURLException {
+        driver = new DriverManager(driver).getDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(propertiesManager.getIntProperty("implicitly.wait.timeout")));
     }
 
 }
