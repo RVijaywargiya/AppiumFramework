@@ -1,7 +1,6 @@
 package TestClasses;
 
 import DataProviders.TestDataProviders;
-import managers.DriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.ITestResult;
@@ -13,9 +12,7 @@ import pages.LoginPage;
 import pages.PageManager;
 import pages.ProductsPage;
 import utils.ScreenshotUtils;
-
-import java.net.MalformedURLException;
-import java.time.Duration;
+import utils.VideoRecordingUtil;
 
 import static org.testng.Assert.assertEquals;
 
@@ -25,21 +22,16 @@ public class LoginTest extends BaseTest {
     ProductsPage productsPage;
     SoftAssert softAssert;
     Logger logger;
+//    private VideoRecordingUtil VideoRecorderUtil;
 
     @BeforeMethod
-    public void setUp() throws MalformedURLException {
-//        setUpDriver();
+    public void setUp() throws Exception {
         logger = LogManager.getLogger(LoginTest.class);
         softAssert = new SoftAssert();
         pageManager = new PageManager(driver);
         loginPage = pageManager.getLoginPage();
+//        VideoRecordingUtil.startRecording("videos", "testVideo");
     }
-
-//    private static void setUpDriver() throws MalformedURLException {
-//        driver = new DriverManager(driver).getDriver();
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(propertiesManager.getIntProperty("implicitly.wait.timeout")));
-//    }
-
 
     @Test(priority = 1, dataProvider =  "successfulLogin", dataProviderClass = TestDataProviders.class)
     public void successfulLogin(String userName, String password) throws InterruptedException {
@@ -59,10 +51,18 @@ public class LoginTest extends BaseTest {
                 "Actual error message : " + loginPage.getLockedOutUserErrorMessageText() + "differs from expected error message");
     }
 
+//    @AfterMethod
+//    public void saveScreenshot(ITestResult result) {
+//        if (result.getStatus() == ITestResult.FAILURE) {
+//            new ScreenshotUtils(driver).captureScreenshot(result.getMethod().getMethodName());
+//        }
+//    }
+
     @AfterMethod
     public void saveScreenshot(ITestResult result) {
-        if (result.getStatus() == ITestResult.FAILURE) {
+//        if (result.getStatus() == ITestResult.FAILURE) {
             new ScreenshotUtils(driver).captureScreenshot(result.getMethod().getMethodName());
-        }
+//        }
     }
+
 }

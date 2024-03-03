@@ -6,6 +6,7 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 import managers.PropertiesManager;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -21,6 +22,10 @@ public class ExtentReportListener implements ITestListener {
     public void onStart(ITestContext context) {
         extentReports = new ExtentReports();
         ExtentSparkReporter sparkReporter = new ExtentSparkReporter("extent-report.html");
+        sparkReporter.config().setDocumentTitle("Appium Framework");
+        sparkReporter.config().setReportName("MyApp");
+        sparkReporter.config().setTheme(Theme.DARK);
+        sparkReporter.config().setCss("body, h1, h2, h3, h4, h5, h6 { font-size: 16px !important; }");
         extentReports.attachReporter(sparkReporter);
     }
 

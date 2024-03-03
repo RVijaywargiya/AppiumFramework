@@ -75,7 +75,6 @@ public class BaseTest {
                 .withTimeout(startUpTimeout));
 
         appiumService.start();
-//        waitForAppiumServerToStart(appiumService);
     }
 
     public static void startEmulator() throws IOException, InterruptedException {
