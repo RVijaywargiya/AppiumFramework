@@ -2,6 +2,7 @@ package listeners;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
@@ -31,6 +32,9 @@ public class ExtentReportListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult result) {
+//        extentTest = extentReports.createTest(result.getName())
+//                .addScreenCaptureFromPath(ScreenshotUtils.getScreenshotPath())
+//                .pass(MediaEntityBuilder.createScreenCaptureFromPath(ScreenshotUtils.getScreenshotPath()).build());
         extentTest = extentReports.createTest(result.getName());
         extentTest.log(Status.INFO, "Test started: " + result.getName());
     }
@@ -38,13 +42,14 @@ public class ExtentReportListener implements ITestListener {
     @Override
     public void onTestSuccess(ITestResult result) {
         extentTest.log(Status.PASS, MarkupHelper.createLabel("Test passed", ExtentColor.GREEN));
+        extentTest.addScreenCaptureFromPath(ScreenshotUtils.getScreenshotDir());
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
         extentTest.log(Status.FAIL, MarkupHelper.createLabel("Test failed", ExtentColor.RED));
         extentTest.log(Status.FAIL, result.getThrowable());
-        extentTest.addScreenCaptureFromPath(ScreenshotUtils.getScreenshotPath());
+        extentTest.addScreenCaptureFromPath(ScreenshotUtils.getScreenshotDir());
     }
 
     @Override
