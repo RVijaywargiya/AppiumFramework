@@ -3,8 +3,8 @@ package TestClasses;
 import DataProviders.TestDataProviders;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
+// import org.testng.ITestResult;
+// import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -13,7 +13,7 @@ import pages.PageManager;
 import pages.ProductsPage;
 import utils.ScreenshotUtils;
 
-import java.io.IOException;
+// import java.io.IOException;
 
 import static org.testng.Assert.assertEquals;
 import static utils.ScreenshotUtils.takeScreenshot;
@@ -24,6 +24,7 @@ public class LoginTest extends BaseTest {
     ProductsPage productsPage;
     SoftAssert softAssert;
     Logger logger;
+    PageManager pageManager;
 //    private VideoRecordingUtil VideoRecorderUtil;
 
     @BeforeMethod
@@ -54,6 +55,10 @@ public class LoginTest extends BaseTest {
                 "Actual error message : " + loginPage.getLockedOutUserErrorMessageText() + "differs from expected error message");
         takeScreenshot(driver, ScreenshotUtils.getScreenshotDir() + Thread.currentThread().getStackTrace()[2].getMethodName());
 
+    }
+
+    public void testVerticalScroll() {
+        
     }
 
 //    @AfterMethod
