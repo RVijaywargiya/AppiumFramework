@@ -11,12 +11,13 @@ import org.testng.asserts.SoftAssert;
 import pages.LoginPage;
 import pages.PageManager;
 import pages.ProductsPage;
-import utils.ScreenshotUtils;
+// import utils.ScreenshotUtils;
 
 // import java.io.IOException;
 
 import static org.testng.Assert.assertEquals;
-import static utils.ScreenshotUtils.takeScreenshot;
+import static utils.ScreenshotUtils.saveScreenshot;
+// import static utils.ScreenshotUtils.takeScreenshot;
 
 public class LoginTest extends BaseTest {
 
@@ -41,7 +42,7 @@ public class LoginTest extends BaseTest {
         loginPage.login(userName, password);
         productsPage = pageManager.getProductsPage();
         softAssert.assertEquals(productsPage.getProductsPageTitle(), "PRODUCTS", "Products page title is incorrect");
-        takeScreenshot(driver, ScreenshotUtils.getScreenshotDir() + Thread.currentThread().getStackTrace()[2].getMethodName());
+        saveScreenshot(driver);
         new ProductsPage(driver).openSideMenu().clickLogout();
     }
 
@@ -53,7 +54,7 @@ public class LoginTest extends BaseTest {
         assertEquals(loginPage.getLockedOutUserErrorMessageText(),
                 UNSUCCESSFUL_LOGIN_ERROR,
                 "Actual error message : " + loginPage.getLockedOutUserErrorMessageText() + "differs from expected error message");
-        takeScreenshot(driver, ScreenshotUtils.getScreenshotDir() + Thread.currentThread().getStackTrace()[2].getMethodName());
+        saveScreenshot(driver);
 
     }
 

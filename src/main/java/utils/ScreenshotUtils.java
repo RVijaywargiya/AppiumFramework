@@ -15,8 +15,6 @@ import java.util.UUID;
 
 public class ScreenshotUtils {
 
-    private static Path destinationPath;
-
     @Getter
     static String screenshotDir = "D:" + File.separator + "Learning" + File.separator + "AppiumFramework"
             + File.separator + "src" + File.separator + "test" + File.separator + "resources"
@@ -39,8 +37,10 @@ public class ScreenshotUtils {
         }
     }
 
-//    public static void saveScreenshot(WebDriver driver, ) {
-//        takeScreenshot(driver, ScreenshotUtils.getScreenshotDir());
-//    }
+    public static void saveScreenshot(WebDriver driver) {
+        String fileName = UUID.randomUUID().toString() + ".png";
+        String screenshotPath = ScreenshotUtils.getScreenshotDir() + File.separator + fileName;
+        takeScreenshot(driver, screenshotPath);
+    }
 
 }

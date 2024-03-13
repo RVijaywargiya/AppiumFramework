@@ -1,7 +1,7 @@
 package pages;
 
 import CommonComponents.Sidebar;
-import com.aventstack.extentreports.App;
+// import com.aventstack.extentreports.App;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
