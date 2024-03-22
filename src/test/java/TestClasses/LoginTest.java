@@ -39,15 +39,18 @@ public class LoginTest extends BaseTest {
 
     @Test(priority = 1, dataProvider =  "successfulLogin", dataProviderClass = TestDataProviders.class)
     public void successfulLogin(String userName, String password) throws InterruptedException {
+        logStep("Starting your test");
         loginPage.login(userName, password);
         productsPage = pageManager.getProductsPage();
         softAssert.assertEquals(productsPage.getProductsPageTitle(), "PRODUCTS", "Products page title is incorrect");
         saveScreenshot(driver);
         new ProductsPage(driver).openSideMenu().clickLogout();
+        logStep("Ending your test");
     }
 
     @Test(priority = 2, dataProvider = "unsuccessfulLogin", dataProviderClass = TestDataProviders.class)
     public void verifyLockedOutUserMessage(String userName, String password) {
+        logStep("Starting your test");
         loginPage.login(userName, password);
         String UNSUCCESSFUL_LOGIN_ERROR = "Sorry, this user has been locked out.";
         logger.info("Actual error message -> " + loginPage.getLockedOutUserErrorMessageText());
@@ -55,12 +58,12 @@ public class LoginTest extends BaseTest {
                 UNSUCCESSFUL_LOGIN_ERROR,
                 "Actual error message : " + loginPage.getLockedOutUserErrorMessageText() + "differs from expected error message");
         saveScreenshot(driver);
-
+        logStep("Ending your test");
     }
 
-    public void testVerticalScroll() {
-        
-    }
+//    public void testVerticalScroll() {
+//
+//    }
 
 //    @AfterMethod
 //    public void saveScreenshot() throws IOException {
