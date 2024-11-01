@@ -22,6 +22,7 @@ public class CapabilitiesManager {
         capabilities.setCapability("avd", propertiesManager.getProperty("avd"));
         capabilities.setCapability("avdLaunchTimeout", propertiesManager.getProperty("avdLaunchTimeout"));
         capabilities.setCapability("systemPort", propertiesManager.getDoubleProperty("systemPort"));
+        capabilities.setCapability("androidInstallTimeout", propertiesManager.getDoubleProperty("androidInstallTimeout"));
         return capabilities;
     }
 }

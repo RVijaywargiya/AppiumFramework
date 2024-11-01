@@ -10,7 +10,7 @@ public class EmulatorManager {
 
     public static void startEmulator() throws IOException, InterruptedException {
         logger.info("Starting Emulator...");
-        String emulatorCommand = "cmd /c start C:\\Users\\rajat\\AppData\\Local\\Android\\Sdk\\emulator\\emulator -avd Pixel_XL_API_30";
+        String emulatorCommand = "cmd /c start C:\\Users\\rajat\\AppData\\Local\\Android\\Sdk\\emulator -avd Pixel_9_Pro_XL_API_25_2";
         Process process = Runtime.getRuntime().exec(emulatorCommand);
         process.waitFor();
         logger.info("Emulator has been started...");
